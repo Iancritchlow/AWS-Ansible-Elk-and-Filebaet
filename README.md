@@ -111,7 +111,8 @@ in you running instances, this will allow you to view a working Kibana
 
 
 
-This is the path so you can see an picture of what Kibana look like (Images/docker_RDP_ELK_Kibana_output.png)
+This is the path so you can see an picture of what Kibana look like 
+![Alt text](https://raw.githubusercontent.com/Iancritchlow/AWS-Ansible-Elk-and-Filebaet/main/Images%20final%20output/Imagesdocker_RDP_ELK_Kibana_output.png.PNG)
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
@@ -135,4 +136,4 @@ The way I specified which machine to install the ELK server
 on versus the way in which to install Filebeat on . by navigating to the ansible director while the Is the elk server was more automated by  was done in hosts file and the file beat was configured prior to by changing lines 1106 and making it my 10.10.0.27 and the doing the same to 1806 in the filebeat.yml file prior to importingin to docker.
 - _The url you want to navigate is http://10.10.2.31:5601/ to make sure that elk is working 
 
-The bounss is completed as linux readme there you will find all the need commands and theneeded instances specifications..
+The bonus is completed as linux readme there you will find all the need commands and the needed instances/ specifications..
