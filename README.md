@@ -36,7 +36,7 @@ _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdow
 
 | Name     | Function | IP Address | Operating System |
 |----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.10.0.27    | Linux ec2        |
+| Jump Box | Gateway  | 10.10.0.27 | Linux ec2        |
 | DVWA     |Webserver | 10.10.2.94 | Ubuntu           |
 | DVWA2    |Webserver |10.10.2.124 | Ubuntu           |
 | ELK      |Logger    |10.10.2.31  | Ubuntu           |
@@ -71,20 +71,20 @@ Ansible was used to automate configuration of the ELK machine. No configuration 
 The playbook implements the following tasks:
 - _Here is a simple rundown or the ELK installation process TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
 - ... Download corrected install-elk.yml and then copy to Jump Box using the command 
-<scp -i " Ohio Key.pem" install-elk.yml ec2-user@ec2-3-142-43-135.us-east-2.compute.amazonaws.com:/ec2-user
+```scp -i " Ohio Key.pem" install-elk.yml ec2-user@ec2-3-142-43-135.us-east-2.compute.amazonaws.com:/ec2-user```
 
 - ... SSH in to Jump Box 
-<ssh -i "Ohio_Key.pem" ec2-user@ec2-3-142-43-135.us-east-2.compute.amazonaws.com
+```ssh -i "Ohio_Key.pem" ec2-user@ec2-3-142-43-135.us-east-2.compute.amazonaws.com```
 
 - ... Check Docker status use command 
-<sudo service docker status> if status in not running use 
-<sudo service docker start> to start docker
-- ... Sudo docker run -t -I cyberxsecurity/ansible bash (this will place you in the root )
+```sudo service docker status``` if status in not running use 
+```sudo service docker start``` to start docker
+- ... ```Sudo docker run -t -I cyberxsecurity/ansible bash (this will place you in the root```
 - ... open new git or command window and do the following 
 SSH in to Jump box, LS to confirm keys and install-elk.yml and run rolowing command 
-<sudo docker ps > copy the container id 
-<sudo docker cp install-elk.yml <container id>:/root
-<sudo docker cp Ohio Key.pem <container id>:/root
+```sudo docker ps``` copy the container id 
+```sudo docker cp install-elk.yml <container id>:/root```
+```sudo docker cp Ohio Key.pem <container id>:/root```
 
 - ... go back to the Jump Box in Root and do the following 
 ls
