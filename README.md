@@ -134,6 +134,8 @@ The files that were used and include are - filebeat-playbook.yml this file was a
 - You have to edit and reconfigure the configuration file. 
 The way I specified which machine to install the ELK server 
 on versus the way in which to install Filebeat on . by navigating to the ansible director while the Is the elk server was more automated by  was done in hosts file and the file beat was configured prior to by changing lines 1106 and making it my 10.10.0.27 and the doing the same to 1806 in the filebeat.yml file prior to importingin to docker.
-- _The url you want to navigate is http://10.10.2.31:5601/ to make sure that elk is working 
+- _The url you want to navigate is http://10.10.2.31:5601/ to make sure that filebeat is working 
+- This is an image of what filebeat loks like when properly deployed 
+- ![Alt text]
 
 The bonus is completed as linux readme there you will find all the need commands and the needed instances/ specifications..
