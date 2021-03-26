@@ -3,7 +3,7 @@
 
 The files in this repository were used to configure the network depicted below.
 
-![TODO: Update the path with the name of your diagram 
+![Alt text](https://raw.githubusercontent.com/Iancritchlow/AWS-Ansible-Elk-and-Filebaet/main/Diagrams/vpc%20diagram%20(2).jpg)
 
 
 These files have been tested and used to generate a live ELK deployment on AWS. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the yml file may be used to install only certain pieces of it, such as Filebeat.
