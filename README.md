@@ -6,7 +6,7 @@ The files in this repository were used to configure the network depicted below.
 ![TODO: Update the path with the name of your diagram 
 
 
-These files have been tested and used to generate a live ELK deployment on AWS. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the _____ file may be used to install only certain pieces of it, such as Filebeat.
+These files have been tested and used to generate a live ELK deployment on AWS. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the yml file may be used to install only certain pieces of it, such as Filebeat.
 
   - install-elk.yml
 
@@ -99,11 +99,11 @@ under [webserver]
 	   10.10.2.31 Save and quit 
 - ... cd ~
 ssh in to ELK run 
-sudo apt-get update 
-sudo apt-get upgrade 
+```sudo apt-get update``` 
+```sudo apt-get upgrade``` 
 exit 
 When back in root run following command 
-<ansible-playbook install-elk.yml --key-file Ohio Key.pem
+```ansible-playbook install-elk.yml --key-file Ohio Key.pem```
 -... Use you RDP machine via AWS and the private ip address from ELK 
 in you running instances, this will allow you to view a working Kibana 
 
