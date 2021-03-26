@@ -1,1 +1,223 @@
+
+
+Using the  CloudFormation to form a Network Stack: VPC, Subnets, Route Tables, IGW, NAT
+
+- Go to https://aws.amazon.com/cloudformation/ 
+
+use the  <Basic_Network_Cloud_formation.yml> ***this file is included****
+
+Step 2: Set IPV4 to auto for both public subnets
+
+- Go to your subnets page, highlight your public subnets, go to actions, click on "Modify auto-assign IP Settings" and then check the box titled "Enable auto-assign public IPv4 address"
+
+
+BUILD ALL THE NEEDED INSTANCES 
+
+
+ Launch Public Amazon Linux EC2 Instance
+
+- Amazon Linux 2 AMI
+
+- Set to VPC1 created with cloudformation template
+
+- Public1 Subnet
+
+- t2 Micro 
+
+- Configure Security Group 
+
+- Select or create a Key Pair (mine is called "Ojio Key.pem")
+
+
+ Build 2 Ubuntu DVWA in the Private Subnet Instances for the ansible container
+
+- Ubuntu Server 20.04 
+
+- t2 Micro 
+
+- Private1 Subnet
+
+- Configure Security Group 
+
+- Select Key Pair used for EC2 Instance (Ohio Key.pem)
+
+- Launch Instance
+
+: Verify Instances are running	
+
+-Upgrade and up date both of the ubuntus
+
+Set up a windows instance
+-t2 micro 
+
+-Public 1 net
+
+-Configure Security Group
+
+-Download and decrypt password using Ohio Key.pem
+
+-Launch instance ,turn off enhanced security options down load and install Google 
+
+
+Create Elk Stack Instance
+
+- Ubunutu
+
+- T3 medium
+
+- ELK Stack Security Group (ports open are: 22, 80, 5044, 5601, 9200, 9300, 9600)
+
+
+
+
+
+Connect to your Public Instance via CMD on your work machine VIA your public key for the instance
+
+- Need to be in the folder where your key pair is stored
+
+- ``` ssh -i "Ohio_Key.pem" ec2-user@ec2-3-142-43-135.us-east2.compute.amazonaws.com
+```
+
+
+
+Use another CMD console to import your public key and the ansible container to your public instance is located 
+
+- ```scp -i "Key" "file to be transferred" "location":/home/"user"```
+
+- ```scp -i "Ohip Key.pem" Ohio Key.pem ansible_config.yml ec2-user@ec2-3-142-43-135.us-east.us.east2.compute.amazonaws.com:/home/ec2-user```
+
+
+
+: chmod 400 the key on your EC2 instance
+
+- ```sudo chmod 400 "key"```
+
+- ```sudo chmod 400 Ohio Key.pem```
+: Get Docker on your EC2 instance
+
+- ```sudo yum install docker```
+
+
+
+: Start docker and verify its running
+
+- ```sudo service docker start```
+
+- ```sudo service docker status```
+
+
+: Pull the cybersecurity ansible container image onto your public instance use ls the moved filed should appear
+
+- ```sudo docker pull cyberxsecurity/ansible```
+
+- ```sudo docker images```
+
+
+
+: Set up the daimon.json file for docker
+
+- ```cd /etc/docker```
+
+- ```sudo nano daemon.json ```
+
+- Paste the following into the .json and save it
+
+```
+{
+"default-address-pools":
+[
+{"base":"10.10.0.0/24","size":16}
+]
+}
+```
+Always restart docker when changes are made :
+
+- ```sudo service docker restart```
+
+
+: The following commands will allow you to get in to Ansible and navigate to root 
+
+- ```sudo docker run -ti cyberxsecurity/ansible bash```
+ 
+
+- ```Should change to root@"container ID" ```
+
+use these commands to see docker is working 
+-```sudo docker ps```
+-```sudo docker images```
+
+: add the public key and ansible config/playbook to the docker container running from another fresh Ansible Jump Box ec2 terminal in cmd 
+-open new terminal  .> navigate to proper directory > SSH in to Ansible use this instance mainly for copying keys and files 
+
+
+- ```ssh -i "Ohio Key.pem" ec2-user@ec2-3-142-43-135.us-east -2.compute.amazonaws.com```
+
+- ```sudo docker ps``` will show your active container as when ran above 
+highlight > copy > and paste this where you see <container> in the command 
+container number will look similar to this  182f2c9d9aa2
+commands are below:
+
+- ```sudo docker cp Ohio Key.pem 182f2c9d9aa2:/root```
+
+- ```sudo docker cp ansible_config.yml 182f2c9d9aa2:/root```
+
+
+
+ SSH from the ansible container into both private instances and update/upgrade them
+
+- ```ssh -i "Ohio Key.pem" ubuntu@10.10.2.94```
+
+- ```sudo apt-get update```
+
+- ```sudo apt-get upgrade```
+
+- ```exit```
+
+- ```ssh -i "OregonKey.pem" ubuntu@10.10.2.124```
+
+- ```sudo apt-get update```
+
+- ```sudo apt-get upgrade```
+
+- ```exit```
+
+Step : Get into the /etc/ansible folder and edit the hosts and ansible.cfg files to allow the private machines to hosts the webservers
+
+- ```cd /etc/ansible```
+
+- ```nano hosts`````` (Uncomment "Webservers" and add IP addresses of both private instances underneath)
+
+- ```nano ansible.cfg``` (Change remote user to ubuntu, "remote_user = ubuntu")
+
+IF YOU HAVE DONE ALL STEPS CORRECT YOU CAN NOW LAUNCH PLAY BOOK USE FOLOWING COMMAND
+
+ Run the ansible playbook from the ~ folder in the container use following command 
+
+- ```ansible-playbook ansible_config.yml --key-file Ohio Key.pem```
+
+
+
+ Run Elk
+
+- Download the install-elk.yml file
+- Edit contents of install-elk.yml so that "remote_user = ubuntu"
+- Move install-elk.yml to ansible docker 
+- ```sudo docker cp <file> <docker process>:/root```
+- In docker process (aka ansible), make sure to add (if not there) the following beneath "[webservers]" and the ip addresses in /etc/ansible/hosts:
+[Elk]
+- Private IPv4 Address of your ELK server>
+
+
+- Ensure that elkserver ubuntu instance has been updated and upgraded 
+
+- ```sudo apt-get update``` or upgrade
+
+- Ensure before running install-elk.yml that you have sshed into the ELK server
+- Ensure that inbound rules on your ELK server allow for ports 5044, 5061, and 9200 to be open.
+- Run the following command within our ansible container ```ansible-playbook install-elk.yml --key-file="your key"```
+
+- Connect by copying the private ip address of your ELK server and paste it into your Windows machine and connect via port 5601.
+
+
+
 Theese are the script, commands and linux details 
